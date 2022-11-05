@@ -30,17 +30,12 @@ print(im_height, im_width)
 print(term_rows, term_columns)
 print(step)
 s_index = 0
-while(1):
-	density = scales[s_index]
+for density in scales:
 	for x in range(0, im_height, int(step / 0.5)): # height and width of fonts are not the same
 		for y in range(0, im_width, step):
 			r, g, b = rgb_im.getpixel((y, x))
-			index = (r + g + b) / 3 / 256 * len(density)
+			index = (r + g * 0xff + b * 0xff * 0xff) / 0xff / 0xff / 0xff * len(density)
 			index = int(index // 1)
-			#print(density[index], end = '')
 			print(density[-index-1], end = '')
 		print()
-	s_index += 1
-	if s_index >= len(scales):
-		s_index = 0
 	time.sleep(1)
